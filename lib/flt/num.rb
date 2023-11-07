@@ -3892,7 +3892,13 @@ class Num < Numeric
   #   any other floating point value.
   #
   def format(*args)
-    options = format_legacy_parameters(*args)
+    # Rails ActiveSupport 7.0.8 started giving this, which causes an error e.g via number_to_currency etc
+    # Unsure what has changed, so this is still a hack
+    if args.first == "F"
+      options = {}
+    else
+      options = format_legacy_parameters(*args)
+    end
 
     format_mode = options[:format] || :auto
     max_leading_zeros = 6
