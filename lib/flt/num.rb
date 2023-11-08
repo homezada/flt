@@ -3159,6 +3159,9 @@ class Num < Numeric
     opt = args.shift || {}
     raise "Invalid arguments for round"  unless args.empty?
 
+    # Rails 7.0.8 workaround hack?
+    opt = {} if opt == :default
+
     # Support Ruby 2.4-style parameters:
     half_rounding = opt.delete(:half)
     case half_rounding
